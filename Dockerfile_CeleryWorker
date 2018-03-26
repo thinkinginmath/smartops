@@ -1,0 +1,9 @@
+FROM python:2.7
+ADD . /smartops/
+WORKDIR /smartops/
+RUN pip install -r module_requirements/celery_requirements.txt
+# RUN python setup.py install
+RUN mkdir -p /var/log/smartops
+VOLUME /kube
+WORKDIR /smartops
+ENTRYPOINT C_FORCE_ROOT=1 celery worker -l info --config smartops.tasks.celeryconfig

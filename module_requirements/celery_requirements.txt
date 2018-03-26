@@ -1,0 +1,10 @@
+celery==4.0.2
+requests
+sqlalchemy
+simplejson
+mysql-python
+lazypy
+redis
+pyyaml
+Jinja2
+kubernetes

@@ -1,0 +1,16 @@
+Flask
+Flask-Cors
+Flask-RESTful
+Flask-Script
+Flask-SQLAlchemy
+Flask-WTF
+jinja2
+lazypy
+MySQL-python
+PyChef
+SQLAlchemy>=0.9.0
+simplejson
+requests
+pyyaml
+redis
+celery==4.0.2

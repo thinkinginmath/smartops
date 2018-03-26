@@ -1,0 +1,4 @@
+build/
+dist/
+smartops.egg-info/
+*.pyc

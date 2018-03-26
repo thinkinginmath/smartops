@@ -1,0 +1,64 @@
+version: '2'
+services:
+  flask:
+    container_name: smartops_flask
+    tty: true
+    restart: always
+    expose:
+      - "8000"
+    image: compassindocker/smartops-flask
+    ports:
+      - "8000:8000"
+    environment:
+      SMARTOPS_SETTING: '/smartops/conf/setting'
+    links:
+      - db
+      - redis
+      - rabbit
+    depends_on:
+      - db
+      - redis
+      - rabbit
+
+  db:
+    container_name: smartops_db
+    ports:
+      - '3306:3306/tcp'
+    tty: true
+    image: mysql/mysql-server
+    environment:
+      MYSQL_USER: 'root'
+      MYSQL_DATABASE: 'smartops'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+
+  celery:
+    container_name: smartops_celery
+    tty: true
+    image: 'compassindocker/smartops-celery'
+    environment:
+      SMARTOPS_SETTING: '/smartops/conf/setting'
+    volumes:
+      - './kube:/kube'
+    links:
+      - db
+      - redis
+      - rabbit
+    depends_on:
+      - db
+      - redis
+      - rabbit
+
+  rabbit:
+    container_name: smartops_rabbit
+    ports:
+      - '5672:5672'
+    tty: true
+    image: rabbitmq
+
+  redis:
+    container_name: smartops_redis
+    ports:
+      - '6379:6379'
+    tty: true
+    image: redis
